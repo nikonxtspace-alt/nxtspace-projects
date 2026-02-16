@@ -1,0 +1,500 @@
+/* ===== Variables ===== */
+:root {
+  --bg: #000000;
+  --bg-card: #111111;
+  --bg-input: #1a1a1a;
+  --text: #ffffff;
+  --text-secondary: #aaaaaa;
+  --accent: #ff2d78;
+  --accent-hover: #ff4d8f;
+  --error: #ff4444;
+  --success: #00cc88;
+  --border: #333333;
+  --radius: 12px;
+}
+
+/* ===== Reset & Base ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 18px;
+}
+
+body {
+  font-family: 'League Spartan', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== App Container ===== */
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Header ===== */
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logo {
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+/* ===== Progress Bar ===== */
+.progress-bar {
+  margin-bottom: 40px;
+}
+
+.progress-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 33.3%;
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+}
+
+.step {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.step.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.step.completed {
+  border-color: var(--success);
+  background: var(--success);
+  color: var(--bg);
+}
+
+/* ===== Form Steps ===== */
+.form-step {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.form-step.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-step h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.step-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+/* ===== Form Groups ===== */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.optional {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg-input);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  outline: none;
+  resize: vertical;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #555;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--accent);
+}
+
+.form-group input.invalid {
+  border-color: var(--error);
+}
+
+.form-group input.valid {
+  border-color: var(--success);
+}
+
+.error-message {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--error);
+  margin-top: 6px;
+  min-height: 1.2em;
+}
+
+/* ===== Type Selector (Chips) ===== */
+.type-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.type-chip {
+  padding: 10px 20px;
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.type-chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.type-chip.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ===== Teilnehmer Cards ===== */
+.teilnehmer-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  animation: fadeIn 0.3s ease;
+}
+
+.teilnehmer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.teilnehmer-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.btn-remove {
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-remove:hover {
+  color: var(--error);
+  background: rgba(255, 68, 68, 0.1);
+}
+
+.teilnehmer-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.teilnehmer-fields .form-group {
+  margin-bottom: 0;
+}
+
+.teilnehmer-fields label {
+  font-size: 0.75rem;
+}
+
+/* ===== Add Button ===== */
+.btn-add {
+  width: 100%;
+  padding: 14px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-add:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.plus-icon {
+  font-size: 1.3rem;
+  font-weight: 300;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  padding: 14px 32px;
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 2px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-secondary);
+  color: var(--text);
+}
+
+.btn-group {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-group .btn-secondary {
+  flex: 0 0 auto;
+}
+
+.btn-group .btn-primary {
+  flex: 1;
+}
+
+/* ===== Success Screen ===== */
+.success-container {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: white;
+  margin: 0 auto 24px;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.success-container h2 {
+  margin-bottom: 12px;
+}
+
+.success-container p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.success-detail {
+  margin-top: 8px;
+  margin-bottom: 32px !important;
+}
+
+.success-container strong {
+  color: var(--accent);
+}
+
+.success-container .btn-primary {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* ===== Footer ===== */
+.footer {
+  margin-top: auto;
+  padding-top: 40px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #555;
+}
+
+/* ===== Spinner ===== */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== Toast ===== */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--error);
+  color: white;
+  padding: 14px 24px;
+  border-radius: var(--radius);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  max-width: 90%;
+  text-align: center;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast.success {
+  background: var(--success);
+}
+
+/* ===== Tablet ===== */
+@media (min-width: 768px) {
+  html { font-size: 20px; }
+  .app { max-width: 650px; padding: 60px 32px; }
+  .form-group input,
+  .form-group textarea { padding: 16px 20px; }
+  .btn { padding: 16px 40px; }
+}
+
+@media (max-width: 480px) {
+  html { font-size: 16px; }
+  .app { padding: 24px 16px; }
+  .logo { font-size: 2rem; }
+  .teilnehmer-fields {
+    grid-template-columns: 1fr;
+  }
+}
