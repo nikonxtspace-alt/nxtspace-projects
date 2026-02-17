@@ -232,28 +232,58 @@ async function submitProject() {
     };
 
     if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
-      // Demo-Modus
       console.log('Demo-Modus: Projektdaten:', data);
       await new Promise(resolve => setTimeout(resolve, 1000));
-    } else {
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      let result;
-      try {
-        result = await response.json();
-      } catch {
-        result = { status: 'success' };
-      }
-
-      if (result.status === 'error') {
-        showToast(result.message || 'Fehler beim Einreichen.');
-        return;
-      }
+      document.getElementById('confirmProjekt').textContent = data.projektTitel;
+      currentStep = 3;
+      showStep(3);
+      showToast('Projekt erfolgreich eingereicht!', 'success');
+      return;
     }
+
+    // CORS-freier Versand via unsichtbarem Form + iframe
+    // Funktioniert auch von http:// zu https://
+    await new Promise((resolve, reject) => {
+      const iframeName = 'submitFrame_' + Date.now();
+      const iframe = document.createElement('iframe');
+      iframe.name = iframeName;
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = GOOGLE_SCRIPT_URL;
+      form.target = iframeName;
+      form.style.display = 'none';
+
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'payload';
+      input.value = JSON.stringify(data);
+      form.appendChild(input);
+
+      document.body.appendChild(form);
+
+      iframe.onload = () => {
+        // Cleanup
+        setTimeout(() => {
+          iframe.remove();
+          form.remove();
+        }, 100);
+        resolve();
+      };
+
+      iframe.onerror = () => {
+        iframe.remove();
+        form.remove();
+        reject(new Error('Netzwerkfehler'));
+      };
+
+      // Timeout nach 15 Sekunden
+      setTimeout(() => resolve(), 15000);
+
+      form.submit();
+    });
 
     // Erfolg
     document.getElementById('confirmProjekt').textContent = data.projektTitel;
