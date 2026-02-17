@@ -1,6 +1,6 @@
 // ===== Configuration =====
 // Google Apps Script URL (Proxy zu Notion)
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwhO8luJbBBmtX1O0MAO13_1tBspOQl2-dM2suFlje0M_SgpjzAdOWUj0wYZ5fCuDekXQ/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwPKHgy5w7Hnk9cToqMO7FQepzUksq-yzizENYGPhP6MUsAEszZAVrkxZN92JhsYr-DSA/exec;
 
 // ===== State =====
 let currentStep = 1;
