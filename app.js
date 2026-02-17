@@ -1,6 +1,6 @@
 // ===== Configuration =====
 // Google Apps Script URL (Proxy zu Notion)
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwPKHgy5w7Hnk9cToqMO7FQepzUksq-yzizENYGPhP6MUsAEszZAVrkxZN92JhsYr-DSA/exec;
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwPKHgy5w7Hnk9cToqMO7FQepzUksq-yzizENYGPhP6MUsAEszZAVrkxZN92JhsYr-DSA/exec';
 
 // ===== State =====
 let currentStep = 1;
@@ -241,48 +241,13 @@ async function submitProject() {
       return;
     }
 
-    // CORS-freier Versand via unsichtbarem Form + iframe
-    // Funktioniert auch von http:// zu https://
-    await new Promise((resolve, reject) => {
-      const iframeName = 'submitFrame_' + Date.now();
-      const iframe = document.createElement('iframe');
-      iframe.name = iframeName;
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = GOOGLE_SCRIPT_URL;
-      form.target = iframeName;
-      form.style.display = 'none';
-
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = 'payload';
-      input.value = JSON.stringify(data);
-      form.appendChild(input);
-
-      document.body.appendChild(form);
-
-      iframe.onload = () => {
-        // Cleanup
-        setTimeout(() => {
-          iframe.remove();
-          form.remove();
-        }, 100);
-        resolve();
-      };
-
-      iframe.onerror = () => {
-        iframe.remove();
-        form.remove();
-        reject(new Error('Netzwerkfehler'));
-      };
-
-      // Timeout nach 15 Sekunden
-      setTimeout(() => resolve(), 15000);
-
-      form.submit();
+    // Sende Daten via no-cors + text/plain (gleicher Ansatz wie Registration-App)
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(data),
+      redirect: 'follow'
     });
 
     // Erfolg
